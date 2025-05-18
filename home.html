@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chicken Farm Daily Tracker</title>
+</head>
+<body>
+  <h1>Chicken Farm Daily Tracker</h1>
+
+  <form id="entryForm">
+    <div>
+      <label for="date">Date</label>
+      <input type="date" id="date" required>
+    </div>
+    <div>
+      <label for="collected">Eggs Collected</label>
+      <input type="number" id="collected" min="0" required>
+    </div>
+    <div>
+      <label for="sold">Eggs Sold</label>
+      <input type="number" id="sold" min="0" required>
+    </div>
+    <div>
+      <label for="price">Sale Price per Egg</label>
+      <input type="number" id="price" step="0.01" min="0" required>
+    </div>
+    <div>
+      <label for="expenseAmt">Expense Amount</label>
+      <input type="number" id="expenseAmt" step="0.01" min="0" required>
+    </div>
+    <div>
+      <label for="expenseDesc">Expense Description</label>
+      <input type="text" id="expenseDesc" required>
+    </div>
+    <button type="submit">Submit Entry</button>
+  </form>
+
+  <div id="controls">
+    <button id="saveData">Save Data</button>
+    <button id="loadData">Load Data</button>
+    <button id="downloadExcel">Download Excel</button>
+    <button id="downloadWord">Download Word</button>
+    <button id="clearData">Clear All</button>
+  </div>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Collected</th>
+        <th>Sold</th>
+        <th>Remaining</th>
+        <th>Price</th>
+        <th>Revenue</th>
+        <th>Expense Amt</th>
+        <th>Expense Desc</th>
+        <th>Profit</th>
+        <th>Money on Hand</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script src="script.js"></script>
+</body>
+</html>
