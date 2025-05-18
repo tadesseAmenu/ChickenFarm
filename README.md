@@ -1,9 +1,6 @@
 demo: https://tadesseamenu.github.io/ChickenFarm/
-Absolutely! Here's a complete description of your "Chicken Farm Daily Tracker" web page, covering its structure, design, behavior, and purpose — helpful if you're documenting your project, explaining it to others, or preparing to expand it.
 
-
-
-## 🐔 Chicken Farm Daily Tracker — Full Project Overview
+ 🐔 Chicken Farm Daily Tracker — Full Project Overview
 
 
 
