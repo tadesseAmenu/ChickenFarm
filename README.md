@@ -1,4 +1,4 @@
-
+Demo: https://tadesseamenu.github.io/Egg_Farm_Daily_Tracker/
 # 🐔 Egg Farm Daily Tracker
 
 A lightweight, feature-rich **web app** designed for small-scale poultry farmers to track egg production, sales, expenses, and profits. Built with **HTML, CSS, and JavaScript**, using `localStorage` for offline data and hosted on **GitHub Pages**.
