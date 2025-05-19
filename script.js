@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const year = date.getUTCFullYear();
     const month = String(date.getUTCMonth() + 1).padStart(2, '0');
     const day = String(date.getUTCDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return `${year}-${month}-${day}`; // Fixed template literal
   }
 
   function updateChart() {
@@ -358,18 +358,30 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        const headers = jsonData[0].map(h => h.toString().trim().toLowerCase());
-        const expectedHeaders = ['date', 'collected', 'sold', 'price', 'expense amt', 'expense desc'];
+        // Normalize headers for comparison
+        const headers = jsonData[0].map(h => h.toString().trim().toLowerCase().replace(/[^a-z0-9]/g, ''));
         const headerMap = {};
-        expectedHeaders.forEach((eh) => {
-          const index = headers.findIndex(h => h.replace(/\s+/g, '').includes(eh.replace(/\s+/g, '')));
-          if (index !== -1) headerMap[eh] = index;
+        const expectedHeaders = [
+          { key: 'date', aliases: ['date', 'day'] },
+          { key: 'collected', aliases: ['collected', 'collect', 'quantity'] },
+          { key: 'sold', aliases: ['sold', 'sell'] },
+          { key: 'price', aliases: ['price', 'unitprice', 'cost'] },
+          { key: 'expenseAmt', aliases: ['expenseamt', 'expenseamount', 'expense', 'cost', 'amount'] },
+          { key: 'expenseDesc', aliases: ['expensedesc', 'expensedescription', 'description', 'desc', 'note'] }
+        ];
+
+        expectedHeaders.forEach(({ key, aliases }) => {
+          const index = headers.findIndex(h => aliases.some(alias => h.includes(alias)));
+          if (index !== -1) headerMap[key] = index;
         });
 
-        if (Object.keys(headerMap).length < 4) {
-          alert('Invalid file structure. Ensure columns: Date, Collected, Sold, Price, Expense Amt, Expense Desc.');
+        // Validate required headers
+        const requiredHeaders = ['date', 'collected', 'sold', 'price'];
+        const missingHeaders = requiredHeaders.filter(h => !(h in headerMap));
+        if (missingHeaders.length > 0) {
+          alert(`Invalid file structure. Missing required columns: ${missingHeaders.join(', ')}.`);
           fileUpload.value = '';
-          console.log('Invalid header structure:', headers);
+          console.log('Missing required headers:', missingHeaders, 'Found headers:', headers);
           return;
         }
 
@@ -395,8 +407,8 @@ document.addEventListener('DOMContentLoaded', () => {
             collected: parseInt(row[headerMap['collected']], 10) || 0,
             sold: parseInt(row[headerMap['sold']], 10) || 0,
             price: parseFloat(row[headerMap['price']]) || 0,
-            expenseAmt: parseFloat(row[headerMap['expense amt']]) || 0,
-            expenseDesc: row[headerMap['expense desc']] ? row[headerMap['expense desc']].toString() : '',
+            expenseAmt: headerMap['expenseAmt'] !== undefined ? parseFloat(row[headerMap['expenseAmt']]) || 0 : 0,
+            expenseDesc: headerMap['expenseDesc'] !== undefined ? row[headerMap['expenseDesc']]?.toString() || '' : '',
           };
 
           entry.remaining = entry.collected - entry.sold;
@@ -513,7 +525,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Check if docx.js is loaded
       if (typeof docx === 'undefined') {
         console.warn('docx.js not loaded, using HTML-based Word export fallback');
-        // Fallback to HTML-based .doc export
         const header = `
           <html>
           <head>
@@ -576,7 +587,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Standard docx.js export with "Grid Table 6 Colorful" style
       console.log('Creating Word document with docx.js');
       const doc = new docx.Document({
         sections: [{
@@ -589,12 +599,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }),
             new docx.Table({
               rows: [
-                // Header row
                 new docx.TableRow({
                   children: [
                     new docx.TableCell({
                       children: [new docx.Paragraph({ text: 'Date', bold: true })],
-                      shading: { fill: '4472C4', color: 'FFFFFF' }, // Blue header
+                      shading: { fill: '4472C4', color: 'FFFFFF' },
                     }),
                     new docx.TableCell({
                       children: [new docx.Paragraph({ text: 'Collected', bold: true })],
@@ -634,12 +643,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }),
                   ],
                 }),
-                // Data rows
                 ...entries.map((entry, index) => new docx.TableRow({
                   children: [
                     new docx.TableCell({
                       children: [new docx.Paragraph(entry.date || '')],
-                      shading: { fill: index % 2 === 0 ? 'D9E2F3' : 'FFFFFF' }, // Alternating rows
+                      shading: { fill: index % 2 === 0 ? 'D9E2F3' : 'FFFFFF' },
                     }),
                     new docx.TableCell({
                       children: [new docx.Paragraph(entry.collected.toString())],
@@ -663,7 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }),
                     new docx.TableCell({
                       children: [new docx.Paragraph(entry.expenseAmt.toFixed(2))],
-                      shading: { fill: 'FFC7CE' }, // Red for expenses
+                      shading: { fill: 'FFC7CE' },
                     }),
                     new docx.TableCell({
                       children: [new docx.Paragraph(entry.expenseDesc || '')],
@@ -671,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }),
                     new docx.TableCell({
                       children: [new docx.Paragraph(entry.profit.toFixed(2))],
-                      shading: { fill: entry.profit >= 0 ? 'C6EFCE' : 'FFC7CE' }, // Green for profit, red for loss
+                      shading: { fill: entry.profit >= 0 ? 'C6EFCE' : 'FFC7CE' },
                     }),
                     new docx.TableCell({
                       children: [new docx.Paragraph(entry.runningTotal.toFixed(2))],
