@@ -1,10 +1,10 @@
 :root {
   --primary: #4CAF50;
   --secondary: #45a049;
-  --profit: #2e8b57; /* Green for profit */
-  --expense: #ff0000; /* Red for expense */
+  --profit: #2e8b57;
+  --expense: #ff0000;
   --text: #333;
-  --text-light: #e0e0e0; /* Light text for dark mode */
+  --text-light: #e0e0e0;
   --bg: #fffbe6;
   --bg-dark: #2e2e2e;
   --card-bg: #f9f9f9;
@@ -23,7 +23,6 @@ body {
   background-color: var(--bg);
   margin: 0;
   padding: 20px;
-  min-height: 100vh;
   color: var(--text);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -36,6 +35,7 @@ body.dark-mode {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 h1 {
@@ -58,28 +58,22 @@ body.dark-mode h1 {
 
 .summary-card {
   flex: 1 1 calc(23% - 20px);
-  background: linear-gradient(145deg, var(--card-bg), #fff);
+  background: var(--card-bg) !important; /* Ensure light mode bg */
   border: 1px solid var(--border);
   border-radius: 15px;
   padding: 20px;
   text-align: center;
   box-shadow: 0 6px 12px var(--shadow);
-  transition: transform 0.2s ease-in-out, background 0.3s ease, border 0.3s ease;
 }
 
 body.dark-mode .summary-card {
-  background: var(--card-bg-dark);
+  background: var(--card-bg-dark) !important; /* Ensure dark mode bg */
   border-color: var(--border-dark);
-}
-
-.summary-card:hover {
-  transform: translateY(-5px);
 }
 
 .summary-card h3 {
   color: var(--text);
   margin-bottom: 10px;
-  font-size: 18px;
 }
 
 body.dark-mode .summary-card h3 {
@@ -89,22 +83,27 @@ body.dark-mode .summary-card h3 {
 .summary-card p {
   font-size: 24px;
   font-weight: bold;
+  color: var(--text); /* Default text color */
 }
 
-.summary-card .profit {
-  color: var(--profit);
+body.dark-mode .summary-card p {
+  color: var(--text-light); /* Default text color in dark mode */
 }
 
-body.dark-mode .summary-card .profit {
-  color: #6abf69;
+.summary-card p.profit {
+  color: var(--profit) !important; /* Green in light mode */
 }
 
-.summary-card .expense {
-  color: var(--expense);
+body.dark-mode .summary-card p.profit {
+  color: #6abf69 !important; /* Brighter green in dark mode */
 }
 
-body.dark-mode .summary-card .expense {
-  color: #ff5555;
+.summary-card p.expense {
+  color: var(--expense) !important; /* Red in light mode */
+}
+
+body.dark-mode .summary-card p.expense {
+  color: #ff5555 !important; /* Brighter red in dark mode */
 }
 
 form {
@@ -145,24 +144,11 @@ form input::placeholder {
   color: #888;
 }
 
-body.dark-mode form input::placeholder {
-  color: #aaa;
-}
-
-form input:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
 form button {
   background-color: var(--primary);
   color: white;
   border: none;
   cursor: pointer;
-}
-
-body.dark-mode form button {
-  color: white;
 }
 
 form button:hover {
@@ -177,7 +163,7 @@ form button:hover {
   margin-bottom: 20px;
 }
 
-.btn {
+.btn, #loadData, #uploadFile {
   background-color: var(--primary);
   color: white;
   border: none;
@@ -189,25 +175,15 @@ form button:hover {
   transition: background-color 0.2s ease;
 }
 
-#loadData {
-  background-color: var(--primary) !important;
-  color: white !important;
-  border: none !important;
-  padding: 12px 20px !important;
-  border-radius: 8px !important;
-  cursor: pointer !important;
-  font-size: 16px !important;
-  min-height: 48px !important;
-  transition: background-color 0.2s ease !important;
-}
-
 body.dark-mode .btn,
-body.dark-mode #loadData {
-  color: white !important;
+body.dark-mode #loadData,
+body.dark-mode #uploadFile {
+  color: white;
 }
 
 .btn:hover,
-#loadData:hover {
+#loadData:hover,
+#uploadFile:hover {
   background-color: var(--secondary);
 }
 
@@ -215,10 +191,6 @@ body.dark-mode #loadData {
   background-color: #2196F3;
   padding: 8px 12px;
   font-size: 14px;
-}
-
-body.dark-mode .btn-edit {
-  color: white;
 }
 
 .btn-edit:hover {
@@ -229,10 +201,6 @@ body.dark-mode .btn-edit {
   background-color: #f44336;
   padding: 8px 12px;
   font-size: 14px;
-}
-
-body.dark-mode .btn-delete {
-  color: white;
 }
 
 .btn-delete:hover {
@@ -279,7 +247,7 @@ td.profit {
 }
 
 body.dark-mode td.profit {
-  color: #6abf69;
+  color: #6abf69 !important; /* Ensure green in dark mode */
 }
 
 td.expense {
@@ -287,83 +255,69 @@ td.expense {
 }
 
 body.dark-mode td.expense {
-  color: #ff5555;
+  color: #ff5555 !important; /* Ensure red in dark mode */
 }
 
 #profitChart {
   margin-top: 30px;
   max-width: 100%;
-  height: 300px;
   width: 100%;
+  height: 300px !important;
+  max-height: 300px;
+  display: block;
+  overflow: hidden;
 }
 
-/* Tablet and Desktop Styles (769px and above) */
-@media (min-width: 769px) {
-  .summary-card {
-    flex: 1 1 calc(23% - 20px);
-  }
-
-  form {
-    flex-wrap: wrap;
-  }
-
-  form input,
-  form button {
-    width: auto;
-  }
-
-  .button-group {
-    flex-wrap: wrap;
-  }
-
-  .btn,
-  #loadData {
-    width: auto;
-  }
-}
-
-/* Mobile Styles (Small Touchscreens, e.g., Phones) */
 @media (max-width: 576px) {
   body {
     padding: 10px;
-    font-size: 14px;
-  }
-
-  h1 {
-    font-size: 1.8rem;
   }
 
   .summary-card {
     flex: 1 1 calc(48% - 10px);
+    background: var(--card-bg) !important; /* Reinforce light mode bg */
+  }
+
+  body.dark-mode .summary-card {
+    background: var(--card-bg-dark) !important; /* Reinforce dark mode bg */
+  }
+
+  .summary-card p.profit {
+    color: var(--profit) !important; /* Green in light mode */
+  }
+
+  body.dark-mode .summary-card p.profit {
+    color: #6abf69 !important; /* Green in dark mode */
+  }
+
+  .summary-card p.expense {
+    color: var(--expense) !important; /* Red in light mode */
+  }
+
+  body.dark-mode .summary-card p.expense {
+    color: #ff5555 !important; /* Red in dark mode */
   }
 
   form {
     flex-direction: column;
-    padding: 15px;
   }
 
   form input,
   form button {
     width: 100%;
-    font-size: 1rem;
-    min-height: 50px;
   }
 
   .button-group {
     flex-direction: column;
-    align-items: stretch;
   }
 
-  .btn,
-  #loadData {
+  .btn, #loadData, #uploadFile {
     width: 100%;
     margin: 8px 0;
-    font-size: 1.1rem;
   }
 
   table {
     border: none;
-    box-shadow: none;
   }
 
   thead {
@@ -375,177 +329,37 @@ body.dark-mode td.expense {
   }
 
   tr {
-    display: block;
     margin-bottom: 20px;
-    background: var(--card-bg);
+    background: var(--card-bg) !important; /* Fix table row bg in light mode */
     border-radius: 12px;
     box-shadow: 0 4px 15px var(--shadow);
     padding: 15px;
   }
 
   body.dark-mode tr {
-    background: var(--card-bg-dark);
+    background: var(--card-bg-dark) !important; /* Fix table row bg in dark mode */
   }
 
   td {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
     padding: 8px 10px;
-    font-size: 0.9rem;
     border-bottom: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.05);
-    margin-bottom: 6px;
-    border-radius: 6px;
   }
 
   body.dark-mode td {
-    border-bottom-color: var(--border-dark);
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  td:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+    border-bottom: 1px solid var(--border-dark);
   }
 
   td::before {
     content: attr(data-label) ": ";
     font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--text);
     flex: 0 0 40%;
     text-align: left;
-    padding-right: 8px;
-    text-transform: capitalize;
-  }
-
-  body.dark-mode td::before {
-    color: var(--text-light);
-  }
-
-  td:not([data-label])::before {
-    content: "Unknown: ";
-    color: #888;
-  }
-
-  td[data-label="Profit"]::before,
-  td.profit {
-    color: var(--profit);
-  }
-
-  body.dark-mode td[data-label="Profit"]::before,
-  body.dark-mode td.profit {
-    color: #6abf69;
-  }
-
-  td[data-label="Expense"]::before,
-  td.expense {
-    color: var(--expense);
-  }
-
-  body.dark-mode td[data-label="Expense"]::before,
-  body.dark-mode td.expense {
-    color: #ff5555;
-  }
-
-  td[data-label="Action"] {
-    justify-content: center;
-    background: none;
-    flex-wrap: nowrap;
-  }
-
-  td[data-label="Action"]::before {
-    content: none;
-  }
-
-  .btn-edit, .btn-delete {
-    width: auto;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    min-height: 36px;
-    margin: 0 4px;
   }
 
   #profitChart {
-    height: 200px;
-  }
-}
-
-/* Intermediate Tablet Styles (577px to 768px) */
-@media (min-width: 577px) and (max-width: 768px) {
-  .summary-card {
-    flex: 1 1 calc(48% - 10px);
-  }
-
-  form {
-    flex-direction: column;
-  }
-
-  form input,
-  form button {
-    width: 100%;
-  }
-
-  .button-group {
-    flex-wrap: wrap;
-  }
-
-  .btn,
-  #loadData {
-    width: auto;
-    margin: 5px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  thead {
-    display: table-header-group;
-  }
-
-  tbody, tr {
-    display: table-row;
-  }
-
-  tr {
-    background: none;
-    box-shadow: none;
-    padding: 0;
-  }
-
-  td {
-    display: table-cell;
-    border: 1px solid var(--border);
-    padding: 10px;
-    font-size: 0.9rem;
-    background: none;
-    margin-bottom: 0;
-    border-radius: 0;
-  }
-
-  body.dark-mode td {
-    border-color: var(--border-dark);
-  }
-
-  td::before {
-    content: none;
-  }
-}
-
-/* Touch devices */
-@media (hover: none) {
-  .btn:hover,
-  #loadData:hover,
-  .btn-edit:hover,
-  .btn-delete:hover,
-  .summary-card:hover {
-    background-color: initial;
-    transform: none;
+    height: 200px !important;
+    max-height: 200px;
   }
 }
