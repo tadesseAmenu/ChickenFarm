@@ -1,6 +1,3 @@
-Here’s a **cleaned-up, Markdown-formatted version** of your Egg Farm Daily Tracker description, ready to paste into your GitHub repository's `README.md`:
-
----
 
 # 🐔 Egg Farm Daily Tracker
 
@@ -171,22 +168,7 @@ A lightweight, feature-rich **web app** designed for small-scale poultry farmers
   * CDN fallbacks with dynamic script loading
   * Error alerts for missing libraries or elements
 
----
-
-## 📋 Notes
-
-* ✅ **Tested On**: Chrome, Firefox, Safari, iPhone simulator (`<576px`), with/without CDNs
-* 🛠 **Assumptions**: Hosted on GitHub Pages with `index.html` at root
-* 💡 **Future Options**:
-
-  * Local fallback for docx.js
-  * Simplified Word export (`.doc` only)
-
----
 
 > The **Egg Farm Daily Tracker** is a complete solution for poultry management — designed for simplicity, offline support, and visual clarity across devices.
 > ✅ Keep your `style.css` and `script.js` updated to benefit from the latest enhancements.
 
----
-
-Let me know if you’d like a matching banner, badges (like MIT license, GitHub Pages link), or GitHub-flavored emoji enhancements!
