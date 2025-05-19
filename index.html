@@ -3,13 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Chicken Farm Daily Tracker</title>
+  <title>Egg Farm Daily Tracker</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
+  <script>
+    // Fallback for SheetJS
+    if (typeof XLSX === 'undefined') {
+      console.warn('SheetJS not loaded from primary CDN. Loading fallback...');
+      const fallbackScript = document.createElement('script');
+      fallbackScript.src = 'https://cdn.sheetjs.com/xlsx-latest/xlsx.full.min.js';
+      fallbackScript.onload = () => console.log('Fallback SheetJS loaded successfully.');
+      fallbackScript.onerror = () => {
+        console.error('Failed to load fallback SheetJS.');
+        alert('Failed to load file upload library. Please check your internet connection.');
+      };
+      document.head.appendChild(fallbackScript);
+    }
+    // Fallback for Chart.js
+    if (typeof Chart === 'undefined') {
+      console.warn('Chart.js not loaded from primary CDN. Loading fallback...');
+      const fallbackScript = document.createElement('script');
+      fallbackScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.min.js';
+      fallbackScript.onload = () => console.log('Fallback Chart.js loaded successfully.');
+      fallbackScript.onerror = () => {
+        console.error('Failed to load fallback Chart.js.');
+        alert('Failed to load chart library. Chart may not display.');
+      };
+      document.head.appendChild(fallbackScript);
+    }
+    // Fallback for docx.js (no alert)
+    setTimeout(() => {
+      if (typeof docx === 'undefined') {
+        console.warn('docx.js not loaded from primary CDN. Loading fallback...');
+        const fallbackScript = document.createElement('script');
+        fallbackScript.src = 'https://unpkg.com/docx@8.5.0/build/index.js';
+        fallbackScript.onload = () => console.log('Fallback docx.js loaded successfully.');
+        fallbackScript.onerror = () => {
+          console.warn('Failed to load fallback docx.js. Using HTML-based Word export.');
+          // No alert; HTML fallback ensures Word export works
+        };
+        document.head.appendChild(fallbackScript);
+      }
+    }, 3000); // Increased to 3 seconds for slower networks
+  </script>
 </head>
 <body>
   <div class="container">
-    <h1>🐔 Chicken Farm Daily Tracker</h1>
+    <h1>🐔 Egg Farm Daily Tracker</h1>
 
     <div class="summary">
       <div class="card summary-card">
@@ -43,8 +85,10 @@
     <div class="button-group">
       <button class="btn" id="saveData">💾 Save</button>
       <button class="btn" id="loadData">📤 Load</button>
-      <button class="btn" id="downloadExcel" onclick="exportToExcel()">📊 Export to Excel</button>
-      <button class="btn" id="downloadWord" onclick="exportToWord()">📄 Export to Word</button>
+      <input type="file" id="fileUpload" accept=".xlsx,.xls,.csv" style="display: none;">
+      <button class="btn" id="uploadFile">📂 Upload File</button>
+      <button class="btn" id="downloadExcel">📊 Export to Excel</button>
+      <button class="btn" id="downloadWord">📄 Export to Word</button>
       <button class="btn" id="clearData">🗑️ Clear</button>
       <button class="btn" id="themeToggle">🌙 Toggle Theme</button>
     </div>
@@ -57,9 +101,9 @@
           <th>Sold</th>
           <th>Remaining</th>
           <th>Price</th>
-          <th>Revenue  Revenue</th>
+          <th>Revenue</th>
           <th>Expense</th>
-          <th>Desc</th>
+          <th>Expense Desc</th>
           <th>Profit</th>
           <th>Money on Hand</th>
           <th>Action</th>
@@ -68,7 +112,7 @@
       <tbody></tbody>
     </table>
 
-    <canvas id="profitChart" height="100"></canvas>
+    <canvas id="profitChart"></canvas>
   </div>
 
   <script src="script.js"></script>
