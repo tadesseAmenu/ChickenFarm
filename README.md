@@ -12,12 +12,12 @@ Welcome to the Egg Farm Daily Tracker—a sleek, easy-to-use tool built to help 
 ## 📦 Daily Input Form
 Quickly add daily details:
 
-* **📅 Date of Entry
-* **🥚 Eggs Collected
-* **💸 Eggs Sold
-* **💲 Sale Price per Egg
-* **🧾 Expense Amount (optional)
-* **📝 Expense Description (optional)
+* **📅 Date of Entry**
+* **🥚 Eggs Collected**
+* **💸 Eggs Sold**
+* **💲 Sale Price per Egg**
+* **🧾 Expense Amount (optional)**
+* **📝 Expense Description (optional)**
 
 Add new entries with ease and keep your records organized.
 
