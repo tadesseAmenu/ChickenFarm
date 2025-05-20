@@ -3,86 +3,87 @@ Demo: https://tadesseamenu.github.io/Egg_Farm_Daily_Tracker/
 
 ---
 
-🐔 **Egg Farm Daily Tracker**
-A powerful, easy-to-use web app to log and manage your daily egg farm operations — from production and sales to expenses and profit tracking. Perfect for hobbyists and commercial farmers alike.
+## 🐔 Egg Farm Daily Tracker
+
+Welcome to the Egg Farm Daily Tracker—a sleek, easy-to-use tool built to help you manage daily egg production, sales, expenses, and overall profitability. Whether you're running a small backyard coop or a larger egg business, this tracker keeps everything in check.
 
 ---
 
-📦 **Daily Input Form**
+## 📦 Daily Input Form
 Quickly add daily details:
 
-📅 Date of Entry
-🥚 Eggs Collected
-💸 Eggs Sold
-💲 Sale Price per Egg
-🧾 Expense Amount (optional)
-📝 Expense Description (optional)
-Hit **Add Entry** to save and update your records instantly.
+* **📅 Date of Entry
+* **🥚 Eggs Collected
+* **💸 Eggs Sold
+* **💲 Sale Price per Egg
+* **🧾 Expense Amount (optional)
+* **📝 Expense Description (optional)
+
+Add new entries with ease and keep your records organized.
 
 ---
 
-📊 **Real-Time Summary Dashboard**
-Keep track of your key farm stats at a glance:
+## 📊 Summary Dashboard
 
-📦 Total Collected — Cumulative eggs gathered
-💸 Total Sold — Eggs sold so far
-📈 Total Profit — Revenue minus expenses
-🧾 Total Expenses — All recorded costs
+Stay informed with real-time metrics:
 
-Updates automatically with every entry.
+* **📦 Total Collected:** Cumulative egg count
+* **💸 Total Sold:** Total units sold
+* **📈 Total Profit:** Revenue minus expenses
+* **🧾 Total Expenses:** All logged costs
 
----
-
-🗂️ **Detailed Data Table**
-View all daily records with:
-
-* Date
-* Collected Eggs
-* Sold Eggs
-* Remaining Stock (Collected - Sold)
-* Price per Egg
-* Revenue (Sold × Price)
-* Expense Amount
-* Expense Description
-* Profit (Revenue - Expense)
-* Money on Hand (Running total)
-* Action buttons to **Edit** or **Delete** entries
-
-Manage your data easily and accurately.
+These values update automatically as you input new data.
 
 ---
 
-📥 **Data Management & Export**
-Keep your data safe and shareable:
+## 🗂️ Data Table Overview
 
-💾 Save Data Locally
-📤 Load Saved Data
-📂 Upload Excel or CSV Files
-📊 Export to Excel
-📄 Export to Word
-🗑️ Clear All Data
+Track and review every detail:
 
-No internet required; works offline.
+| Field         | Description         |
+| ------------- | ------------------- |
+| Date          | Entry date          |
+| Collected     | Eggs gathered       |
+| Sold          | Eggs sold           |
+| Remaining     | Unsold stock        |
+| Price         | Price per unit      |
+| Revenue       | Income from sales   |
+| Expense       | Cost of operations  |
+| Desc          | Expense description |
+| Profit        | Net earnings        |
+| Money on Hand | Accumulated balance |
+
+Edit or remove entries anytime. It's your data—your way.
 
 ---
 
-📉 **Profit Chart**
+## 📥 Export & Save Features
+
+Maintain backups and create reports effortlessly:
+
+* 💾 Save Data Locally
+* 📤 Load Saved Data
+* 📂 Upload Excel or CSV Files
+* 📊 Export to Excel
+* 📄 Export to Word
+* 🗑️ Clear All Data
+
+Your information is stored locally—no internet required.
+
+---
+## 📉 Profit Chart
 Visualize profit trends with an interactive line chart that updates live.
 
 ---
 
-🌙 **Theme Toggle**
-Switch between light and dark modes for comfortable viewing anytime.
+## 🌙 Theme Toggle
+
+Switch between light and dark modes with a single click to suit your environment.
 
 ---
 
-🛠️ **Reliable Libraries & Fallbacks**
+## 🛠️ Reliable Libraries & Fallbacks
 Uses Chart.js, SheetJS, and docx.js from CDNs with automatic fallback loading for smooth, uninterrupted performance.
-
----
-
-Track smarter and grow your egg farm profitably with this all-in-one daily tracker!
-
 
 ---
 
